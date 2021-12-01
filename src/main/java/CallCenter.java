@@ -3,7 +3,6 @@ import java.util.concurrent.SynchronousQueue;
 
 public class CallCenter {
 
-    // final private SynchronousQueue<PhoneCall> calls = new SynchronousQueue<>();
     final private LinkedTransferQueue<PhoneCall> calls = new LinkedTransferQueue<>();
     private volatile int countCall = 0;
 
@@ -25,7 +24,7 @@ public class CallCenter {
 
     public void takePhoneCall() {
         try {
-            while (!calls.isEmpty()) {
+            while (calls.peek() != null) {
                 waiting();
                 System.out.println(Thread.currentThread().getName() + " принял " + calls.take());
                 waiting();
